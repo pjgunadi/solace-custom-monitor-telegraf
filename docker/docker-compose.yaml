@@ -1,0 +1,50 @@
+version: '3.9'
+services:
+  influxdb:
+    image: influxdb:2.1
+    deploy:
+      replicas: 1
+    environment:
+      - TZ=Asia/Singapore
+    ports:
+      - 8086:8086
+    volumes:
+      - influxdb:/var/lib/influxdb2
+      - ../influxdb/config.yml:/etc/influxdb2/config.yml
+  telegraf:
+    image: telegraf:1.21
+    deploy:
+      replicas: 1
+    environment:
+      - TZ=Asia/Singapore
+      - ROUTER_NAME=your_solace_pubsubplus_router_name_for_tagging
+      - URL=https://your_solace_management_ip:port
+      - USER=your_solace_mgmt_readonly_user
+      - PASSWORD=your_solace_password
+      - INFLUX_TOKEN=your_write_permission_influx_token
+    links:
+      - influxdb
+    volumes:
+      - ../telegraf/telegraf.conf:/etc/telegraf/telegraf.conf
+  grafana:
+    image: grafana/grafana:8.3.4
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          memory: 128M
+        reservations:
+          memory: 64M
+    environment:
+      - TZ=Asia/Singapore
+    ports:
+      - 3000:3000
+    links:
+      - "influxdb"
+    volumes:
+      - grafana:/var/lib/grafana
+
+volumes:
+  influxdb: {}
+  grafana: {}
+
