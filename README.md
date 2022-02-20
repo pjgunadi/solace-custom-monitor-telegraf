@@ -76,7 +76,7 @@ influx auth create -o <organization-name> --write-bucket $BUCKET_ID
 
 ### Telegraf
 1. Download and install [telegraf](https://docs.influxdata.com/telegraf/v1.21/introduction/installation/) or use [container image](https://hub.docker.com/_/telegraf): `docker pull telegraf`
-2. Configure telegraf at `/etc/telegraf/telegraf.conf`. Use this sample configuration for [Solace](./telegraf/telegraf-solace.conf)
+2. Configure telegraf at `/etc/telegraf/telegraf.conf`. Use this sample configuration for [Solace](./telegraf/telegraf_solace.conf)
 Below is a sample of `telegraf.conf`:
 ```
 [agent]
