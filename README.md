@@ -42,14 +42,12 @@ A few samples of Grafana dashboards are avaiable:
 ### Queue Dashboard
 ![Queue Dashboard](./images/grafana_queue.png)
 
-Metrics collection from grafana can get any metrics provided from Solace SEMPv1 API. 
-
 ## Components Deployment
 ### InfluxDB v2
-1. Install and configure [InfluxDB v2](https://docs.influxdata.com/influxdb/v2.1/install/) or use (container image)[https://hub.docker.com/_/influxdb]:`docker pull influxdb`
-2. Start influxdb (service)[https://docs.influxdata.com/influxdb/v2.1/install/#start-influxdb]
-3. Use (WebUI)[https://docs.influxdata.com/influxdb/v2.1/install/#set-up-influxdb-through-the-ui] or (CLI)[https://docs.influxdata.com/influxdb/v2.1/install/?t=CLI+Setup] to create and configure influx database. The next steps use CLI to configure influxdb.
-4. Download and install (influx CLI)[https://docs.influxdata.com/influxdb/v2.1/tools/influx-cli/]
+1. Install and configure [InfluxDB v2](https://docs.influxdata.com/influxdb/v2.1/install/) or use [container image](https://hub.docker.com/_/influxdb):`docker pull influxdb`
+2. Start influxdb [service](https://docs.influxdata.com/influxdb/v2.1/install/#start-influxdb)
+3. Use [WebUI](https://docs.influxdata.com/influxdb/v2.1/install/#set-up-influxdb-through-the-ui) or [CLI](https://docs.influxdata.com/influxdb/v2.1/install/?t=CLI+Setup) to create and configure influx database. The next steps use CLI to configure influxdb.
+4. Download and install [influx CLI](https://docs.influxdata.com/influxdb/v2.1/tools/influx-cli/)
 5. Initialize Influx Database:
 ```
 influx setup --host http://<influxdb-ip>:8086 -u <new-admin-user> -p <new-admin-password> -o <organization-name> -b <bucket-name> -r <retention-hours>
@@ -77,8 +75,8 @@ influx auth create -o <organization-name> --write-bucket $BUCKET_ID
 ```
 
 ### Telegraf
-1. Download and install (telegraf)[https://docs.influxdata.com/telegraf/v1.21/introduction/installation/] or use (container image)[https://hub.docker.com/_/telegraf]: `docker pull telegraf`
-2. Configure telegraf at `/etc/telegraf/telegraf.conf`. Use this sample configuration for (Solace)[./telegraf/telegraf-solace.conf]
+1. Download and install [telegraf](https://docs.influxdata.com/telegraf/v1.21/introduction/installation/) or use [container image](https://hub.docker.com/_/telegraf): `docker pull telegraf`
+2. Configure telegraf at `/etc/telegraf/telegraf.conf`. Use this sample configuration for [Solace](./telegraf/telegraf-solace.conf)
 Below is a sample of `telegraf.conf`:
 ```
 [agent]
@@ -133,24 +131,24 @@ Below is a sample of `telegraf.conf`:
       local-status="local-status"
 ```
 
-3. Start Telegraf (service)[https://docs.influxdata.com/telegraf/v1.21/introduction/getting-started/#start-telegraf-service]
+3. Start Telegraf [service](https://docs.influxdata.com/telegraf/v1.21/introduction/getting-started/#start-telegraf-service)
 
 ### Grafana
-1. Install and configure (Grafana)[https://grafana.com/docs/grafana/latest/installation/] or use (container image)[https://hub.docker.com/r/grafana/grafana]: `docker pull grafana/grafana`
-2. Configure (Influxdb data source)[https://grafana.com/docs/grafana/latest/datasources/influxdb/]
-3. (Import)[https://grafana.com/docs/grafana/latest/dashboards/export-import/] dashboard from json files in (grafana folder)[./grafana]
+1. Install and configure [Grafana](https://grafana.com/docs/grafana/latest/installation/) or use [container image](https://hub.docker.com/r/grafana/grafana): `docker pull grafana/grafana`
+2. Configure [Influxdb data source](https://grafana.com/docs/grafana/latest/datasources/influxdb/)
+3. [Import](https://grafana.com/docs/grafana/latest/dashboards/export-import/) dashboard from json files in [grafana folder](./grafana)
 
 ## Deployment with Docker Compose
-1. Reuse and modify the sample (docker-compose file)[./docker/docker-compose.yaml]. Assign the value of these environment variables:
+1. Reuse and modify the sample [docker-compose file](./docker/docker-compose.yaml). Assign the value of these environment variables:
 - TZ: time-zone
 - ROUTER_NAME: Solace broker hostname or routername
 - URL: Solace SEMP URL (`[http|https]://<router-management-ip>[:port]`)
 - USER: Solace management user with at least read-only permission
 - PASSWORD: Solace user's password
-- INFLUX_TOKEN: Influx write permission token. The token is to be created during (initialiation of influxdb)[#-InfluxDB-v2]
-2. Follow the steps in (component deployment)[#components-deployment] to initialize Influxdb
-3. Update (telegraf configuration file)[./telegraf/telegraf_solace.conf]
+- INFLUX_TOKEN: Influx write permission token. The token is to be created during [initialiation of influxdb](#-InfluxDB-v2)
+2. Follow the steps in [component deployment](#components-deployment) to initialize Influxdb
+3. Update [telegraf configuration file](./telegraf/telegraf_solace.conf)
 
 ## Configuration Reference
-1. (XPath[https://developer.mozilla.org/en-US/docs/Web/XPath]) for Telegraf XML parsing
-2. (Query on Influx v2)[https://docs.influxdata.com/flux/v0.x/stdlib/]
+1. [XPath](https://developer.mozilla.org/en-US/docs/Web/XPath) for Telegraf XML parsing
+2. [Query on Influx v2](https://docs.influxdata.com/flux/v0.x/stdlib/)
