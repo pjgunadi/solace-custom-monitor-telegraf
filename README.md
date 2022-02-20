@@ -9,7 +9,7 @@ This repository contains example of Solace metrics monitoring with the these sof
 ![Tools Stack](./images/tools_stack.png)
 
 ## Distributed Deployment
-When there is a multi-sites monitoring, it is possible to consolidate metrics to a central site using a MQTT server
+When there are multi-sites to monitor, metrics can be consolidated to one central monitoring site via a MQTT server before ingesting into influxdb.
 
 ![Distributed Deployment](./images/distributed_architecture.png)
 
